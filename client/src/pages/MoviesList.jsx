@@ -40,14 +40,7 @@ function Table({ columns, data }) {
 }
 
 function DeleteMovie({ props }) {
-	// const deleteUser = (e) => {
-	// 	e.preventDefault();
-	// 	//if window.confirm is true
-	// 	if (window.confirm(`Do you want to delete the movie ${id} permanently ?`)) {
-	// 		// api.deleteMovieById(id);
-	// 		window.location.reload();
-	// 	}
-	// };
+
 	const deleteUser = () => {
 		const id = props.row.original._id;
 		console.log(id);
@@ -59,6 +52,18 @@ function DeleteMovie({ props }) {
 	return <div onClick={deleteUser}>Delete</div>;
 }
 
+function UpdateMovie({props}) {
+	const updateUser = () => {
+		const id = props.row.original._id;
+		console.log(id)
+		window.location.href = `/movies/update/${id}`
+	}
+	return(
+		<div onClick={updateUser}>Update</div>
+	)
+}
+
+//main-function
 function MoviesList() {
 	const [movies, setMovies] = useState([]);
 
@@ -84,12 +89,7 @@ function MoviesList() {
 		});
 	};
 
-	function Blah({ item }) {
-		// console.log(item);
-		// console.log(item.data.map(item => item.time))
-		// const timeData = item.data.map(item => item.time);
-		return <div>Blah</div>;
-	}
+	
 
 	const columns = useMemo(
 		() => [
@@ -111,13 +111,7 @@ function MoviesList() {
 			{
 				Header: 'Time',
 				accessor: 'time',
-				Cell: function (props) {
-					return (
-						<span>
-							<Blah item={props} />
-						</span>
-					);
-				},
+				
 			},
 			{
 				Header: '',
@@ -126,6 +120,17 @@ function MoviesList() {
 					return (
 						<span>
 							<DeleteMovie props={props} />
+						</span>
+					);
+				},
+			},
+			{
+				Header: '',
+				accessor: '__v',
+				Cell: (props) => {
+					return (
+						<span>
+							<UpdateMovie props={props} />
 						</span>
 					);
 				},
